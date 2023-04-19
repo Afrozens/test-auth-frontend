@@ -11,11 +11,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const navigate = useNavigate();
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -43,7 +45,7 @@ const Header = () => {
           >
             Photos
           </Typography>
-          {auth && (
+          {auth ? (
             <div>
               <IconButton
                 size="large"
@@ -74,6 +76,13 @@ const Header = () => {
                 <MenuItem onClick={handleClose}>Dashboard</MenuItem>
               </Menu>
             </div>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => navigate('/login')}
+            >
+              Login
+            </Button>
           )}
         </Toolbar>
       </AppBar>
