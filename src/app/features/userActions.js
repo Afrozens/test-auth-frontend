@@ -29,7 +29,7 @@ export const userLogin = createAsyncThunk(
   },
 );
 
-export const registerUser = createAsyncThunk(
+export const userRegister = createAsyncThunk(
   userServicesConfig.userRegister,
   async ({ firstName, email, password }, { rejectWithValue }) => {
     try {

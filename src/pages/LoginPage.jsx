@@ -13,26 +13,25 @@ import Container from '@mui/material/Container';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 const LoginPage = () => {
   const [login, setLogin] = useState({
     email: '',
     password: '',
-  })
+  });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setLogin({ ...login, [e.target.name]: e.target.value })
-    console.log(login)
-  }
+    setLogin({ ...login, [e.target.name]: e.target.value });
+    console.log(login);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (login) {
-      navigate('/')
+      navigate('/');
     }
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -51,7 +50,12 @@ const LoginPage = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleSubmit}>
+        <Box
+          component="form"
+          noValidate
+          sx={{ mt: 1 }}
+          onSubmit={handleSubmit}
+        >
           <TextField
             margin="normal"
             required
@@ -104,9 +108,6 @@ const LoginPage = () => {
       </Box>
     </Container>
   );
-}
-
+};
 
 export default LoginPage;
-
-

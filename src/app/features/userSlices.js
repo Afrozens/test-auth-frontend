@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { registerUser, userLogin } from './authActions';
+import { userRegister, userLogin } from './userActions';
 
 //si esta jwt en localstorage colocarlo en el estado.
 const userToken = localStorage.getItem('userToken')
@@ -41,7 +41,7 @@ const userSlice = createSlice({
         state.userInfo = payload;
         state.userToken = payload.userToken;
       })
-      .addCase(userLogin.fulfilled, (state, { payload }) => {
+      .addCase(userLogin.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
       })
@@ -54,7 +54,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.success = true;
       })
-      .addCase(userRegister.fulfilled, (state, { payload }) => {
+      .addCase(userRegister.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
       });
