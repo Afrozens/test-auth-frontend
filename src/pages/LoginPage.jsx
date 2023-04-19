@@ -4,14 +4,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../app/features/userActions';
 
 const LoginPage = () => {
   const [login, setLogin] = useState({
@@ -19,20 +20,24 @@ const LoginPage = () => {
     password: '',
   });
   const navigate = useNavigate();
+  const { userInfo, loading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/dashboard');
+    }
+  }, [navigate, userInfo]);
 
   const handleChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
-    console.log(login);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (login) {
-      navigate('/');
+      dispatch(userLogin(login));
     }
   };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -88,6 +93,7 @@ const LoginPage = () => {
             type="submit"
             fullWidth
             variant="contained"
+            disabled={loading}
             sx={{ mt: 3, mb: 2 }}
           >
             Sign In
@@ -99,7 +105,7 @@ const LoginPage = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link to="/register">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

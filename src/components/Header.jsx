@@ -13,11 +13,24 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials } from '../app/features/userSlices';
+import { useGetDetailsQuery } from '../services/userServices';
 
 const Header = () => {
-  const [auth, setAuth] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const { userInfo } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { data, isFetching } = useGetDetailsQuery('userDetails', {
+    //Cada 15m automaticamente hara la peticion para ver si el usuario esta autenticado
+    pollingInterval: 900000,
+  });
+
+  useEffect(() => {
+    if (data) dispatch(setCredentials(data));
+  }, [data, dispatch]);
+
+  const [anchorEl, setAnchorEl] = useState(null);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -45,7 +58,7 @@ const Header = () => {
           >
             Photos
           </Typography>
-          {auth ? (
+          {userInfo ? (
             <div>
               <IconButton
                 size="large"
