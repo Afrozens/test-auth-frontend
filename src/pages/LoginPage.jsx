@@ -1,24 +1,29 @@
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogin } from '../app/features/userActions';
+import { userLogin } from '@/app/features/user/userActions';
+import { showMsg, hiddenMsg } from '@/app/features/msg/msgSlice';
+
+const initialStateLogin = {
+  email: '',
+  password: '',
+};
 
 const LoginPage = () => {
-  const [login, setLogin] = useState({
-    email: '',
-    password: '',
-  });
+  const [login, setLogin] = useState(initialStateLogin);
   const navigate = useNavigate();
   const { userInfo, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -26,7 +31,11 @@ const LoginPage = () => {
   useEffect(() => {
     if (userInfo) {
       navigate('/dashboard');
+      dispatch(showMsg('You are logged in correctly'));
     }
+    setTimeout(() => {
+      dispatch(hiddenMsg());
+    }, 5000);
   }, [navigate, userInfo]);
 
   const handleChange = (e) => {
@@ -37,6 +46,9 @@ const LoginPage = () => {
     if (login) {
       dispatch(userLogin(login));
     }
+    //clean states
+
+    setLogin(initialStateLogin);
   };
   return (
     <Container component="main" maxWidth="xs">

@@ -14,8 +14,11 @@ import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials } from '../app/features/userSlices';
-import { useGetDetailsQuery } from '../services/userServices';
+import {
+  logout,
+  setCredentials,
+} from '@/app/features/user/userSlices';
+import { useGetDetailsQuery } from '@/services/userServices';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.user);
@@ -38,6 +41,10 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -56,7 +63,7 @@ const Header = () => {
             component="div"
             sx={{ flexGrow: 1 }}
           >
-            Photos
+            Test
           </Typography>
           {userInfo ? (
             <div>
@@ -86,7 +93,10 @@ const Header = () => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+                <MenuItem onClick={() => navigate('/dashboard')}>
+                  Dashboard
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
           ) : (

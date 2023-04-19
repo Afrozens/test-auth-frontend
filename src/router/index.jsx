@@ -1,12 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from '../components';
+import { Layout, ProtectedRoute } from '@/components';
 import {
   ErrorPage,
   HomePage,
   LoginPage,
   RegisterPage,
   DashboardPage,
-} from '../pages';
+} from '@/pages';
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +31,11 @@ export const router = createBrowserRouter([
           },
           {
             path: '/dashboard',
-            element: <DashboardPage />,
+            element: (
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            ),
           },
         ],
       },
