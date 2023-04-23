@@ -1,2 +1,3 @@
+export * from './index';
 export * from './userServices';
-export * from './userServicesConfig';
+export { default as userServicesConfig } from './userServicesConfig';

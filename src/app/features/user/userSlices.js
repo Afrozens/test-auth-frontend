@@ -1,7 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import { userRegister, userLogin } from './userActions';
 
-//si esta jwt en localstorage colocarlo en el estado.
+// si esta jwt en localstorage colocarlo en el estado.
 const userToken = localStorage.getItem('userToken')
   ? localStorage.getItem('userToken')
   : null;
@@ -30,7 +31,7 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    //login user
+    // login user
     builder
       .addCase(userLogin.pending, (state) => {
         state.loading = true;
@@ -45,7 +46,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = payload;
       })
-      //register user
+      // register user
       .addCase(userRegister.pending, (state) => {
         state.loading = true;
         state.error = null;

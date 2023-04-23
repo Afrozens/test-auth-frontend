@@ -11,7 +11,7 @@ import {
   Typography,
   Container,
 } from '@mui/material';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '@/app/features/user/userActions';
@@ -22,7 +22,7 @@ const initialStateLogin = {
   password: '',
 };
 
-const LoginPage = () => {
+function LoginPage() {
   const [login, setLogin] = useState(initialStateLogin);
   const navigate = useNavigate();
   const { userInfo, loading } = useSelector((state) => state.user);
@@ -31,11 +31,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (userInfo) {
       navigate('/dashboard');
-      dispatch(showMsg('You are logged in correctly'));
     }
-    setTimeout(() => {
-      dispatch(hiddenMsg());
-    }, 5000);
   }, [navigate, userInfo]);
 
   const handleChange = (e) => {
@@ -45,10 +41,14 @@ const LoginPage = () => {
     e.preventDefault();
     if (login) {
       dispatch(userLogin(login));
-    }
-    //clean states
+      dispatch(showMsg('You are logged in correctly'));
+      // clean states
 
-    setLogin(initialStateLogin);
+      setTimeout(() => {
+        dispatch(hiddenMsg());
+      }, 5000);
+      setLogin(initialStateLogin);
+    }
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -111,14 +111,9 @@ const LoginPage = () => {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
               <Link to="/register">
-                {"Don't have an account? Sign Up"}
+                Dont have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
@@ -126,6 +121,6 @@ const LoginPage = () => {
       </Box>
     </Container>
   );
-};
+}
 
 export default LoginPage;

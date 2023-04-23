@@ -1,8 +1,8 @@
-import axios from 'axios';
+/* eslint-disable consistent-return */
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { userServicesConfig } from '../../../services/userServicesConfig';
+import axios from '@/api/axios';
+import { userServicesConfig } from '@/services';
 
-const backendURL = 'http://localhost:5000';
 const config = {
   headers: {
     'Content-Type': 'application/json',
@@ -14,7 +14,7 @@ export const userLogin = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(
-        `${backendURL}/api/user/login`,
+        '/api/user/login',
         { email, password },
         config,
       );
@@ -32,9 +32,8 @@ export const userRegister = createAsyncThunk(
   userServicesConfig.userRegister,
   async ({ firstName, email, password }, { rejectWithValue }) => {
     try {
-      console.log(firstName, email, password);
       await axios.post(
-        `${backendURL}/api/user/register`,
+        '/api/user/register',
         { firstName, email, password },
         config,
       );

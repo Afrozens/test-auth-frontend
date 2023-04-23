@@ -1,5 +1,7 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable import/prefer-default-export */
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout, ProtectedRoute } from '@/components';
+import { Layout, ProtectedRoutes } from '@/components';
 import {
   ErrorPage,
   HomePage,
@@ -32,9 +34,9 @@ export const router = createBrowserRouter([
           {
             path: '/dashboard',
             element: (
-              <ProtectedRoute>
+              <ProtectedRoutes>
                 <DashboardPage />
-              </ProtectedRoute>
+              </ProtectedRoutes>
             ),
           },
         ],

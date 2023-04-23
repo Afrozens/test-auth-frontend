@@ -5,8 +5,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Grid,
   Box,
   Typography,
@@ -23,7 +21,7 @@ const initialStateRegister = {
   password: '',
 };
 
-const RegisterPage = () => {
+function RegisterPage() {
   const [register, setRegister] = useState(initialStateRegister);
   const navigate = useNavigate();
   const { loading, userInfo, success } = useSelector(
@@ -53,7 +51,7 @@ const RegisterPage = () => {
     e.preventDefault();
     if (register) {
       dispatch(userRegister(register));
-      //clean state
+      // clean state
       setRegister(initialStateRegister);
     }
   };
@@ -140,6 +138,6 @@ const RegisterPage = () => {
       </Box>
     </Container>
   );
-};
+}
 
 export default RegisterPage;

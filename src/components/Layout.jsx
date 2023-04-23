@@ -1,9 +1,10 @@
 import React from 'react';
-import Header from './Header';
+import { SnackbarProvider } from 'notistack';
 import { Outlet } from 'react-router-dom';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
-import { SnackbarProvider } from 'notistack';
+import { SnackbarUtilitiesConfigurator } from '../utilities';
+import Header from './Header';
 
 const myCache = createCache({
   key: 'my-prefix-key',
@@ -11,25 +12,24 @@ const myCache = createCache({
   insertionPoint: document.getElementById('emotion-insertion-point'),
 });
 
-const Layout = () => {
+function Layout() {
   return (
-    <>
-      <CacheProvider value={myCache}>
-        <SnackbarProvider
-          maxSnack={3}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-        >
-          <Header />
-          <main>
-            <Outlet />
-          </main>
-        </SnackbarProvider>
-      </CacheProvider>
-    </>
+    <CacheProvider value={myCache}>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+      >
+        <SnackbarUtilitiesConfigurator />
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+      </SnackbarProvider>
+    </CacheProvider>
   );
-};
+}
 
 export default Layout;
